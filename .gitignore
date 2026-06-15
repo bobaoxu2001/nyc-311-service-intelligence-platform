@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local generated data
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+outputs/sample_dashboard_data/*
+!outputs/sample_dashboard_data/.gitkeep
+outputs/insights/*
+!outputs/insights/.gitkeep
+
+# Local runtime files
+*.duckdb
+*.duckdb.wal
+.DS_Store
