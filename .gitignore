@@ -9,12 +9,12 @@ data/raw/*
 !data/raw/.gitkeep
 data/processed/*
 !data/processed/.gitkeep
-outputs/sample_dashboard_data/*
-!outputs/sample_dashboard_data/.gitkeep
-outputs/insights/*
-!outputs/insights/.gitkeep
 
 # Local runtime files
 *.duckdb
 *.duckdb.wal
 .DS_Store
+
+# Large generated dashboard extracts; rerun pipeline to regenerate
+outputs/sample_dashboard_data/fact_service_requests.csv
+outputs/sample_dashboard_data/dim_location.csv
