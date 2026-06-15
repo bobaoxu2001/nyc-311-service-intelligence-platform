@@ -1,48 +1,101 @@
 # Microsoft Fabric-Ready Implementation Guide
 
-This project runs locally with Python, DuckDB, SQL, and CSV exports. The design maps cleanly to Microsoft Fabric, but this repository does not claim that the pipeline has actually run inside Fabric.
+This repository runs locally with Python, DuckDB, SQL, and CSV exports. The design is intentionally **Fabric-ready**, but it has not been deployed to Microsoft Fabric in this repo. The guidance below explains how a client implementation could map the local pattern to Fabric.
 
-## Local-to-Fabric Mapping
+## Local-To-Fabric Mapping
 
 | Local Component | Fabric Equivalent | Purpose |
 |---|---|---|
-| `data/raw/nyc_311_raw.parquet` | OneLake Lakehouse bronze files | Preserve raw NYC Open Data records. |
-| `silver_service_requests` | Lakehouse table or Warehouse table | Standardize fields, parse dates, and add quality flags. |
-| Gold star schema tables | Warehouse or Lakehouse SQL endpoint | Serve governed Power BI semantic model tables. |
-| `src/ingest_311.py` | Data Factory Pipeline or Dataflow Gen2 | Parameterized ingestion from the Socrata API. |
-| `src/transform_311.py` | Fabric Notebook or SQL script | Apply medallion SQL transformations. |
-| `src/anomaly_detection.py` | Fabric Notebook scheduled job | Run explainable daily spike detection. |
-| CSV outputs | Power BI semantic model import or Direct Lake tables | Build report pages and measures. |
+| `src/ingest_311.py` | Data Factory Pipeline or Dataflow Gen2 | Parameterized Socrata API ingestion. |
+| `data/raw/nyc_311_raw.parquet` | OneLake Lakehouse bronze files | Preserve raw public-data extracts and metadata. |
+| `sql/silver/` | Fabric Notebook, Spark SQL, or SQL endpoint transform | Normalize fields, parse dates, calculate resolution metrics, and add quality flags. |
+| `sql/gold/` | Warehouse or Lakehouse SQL endpoint | Publish star schema and KPI marts. |
+| `src/quality_checks.py` | Fabric Notebook or scheduled data-quality job | Produce QA report and exception counts. |
+| `src/anomaly_detection.py` | Fabric Notebook scheduled job | Produce explainable anomaly events. |
+| `outputs/sample_dashboard_data/` | Power BI semantic model over Fabric tables | Local CSV handoff for portfolio review; Fabric would serve tables directly. |
 
-## Suggested Fabric Architecture
+## Target Architecture
 
-1. **OneLake/Lakehouse Bronze**
-   - Land raw 311 extracts by ingestion date.
-   - Store source metadata such as dataset ID, API URL, requested limit, and ingestion timestamp.
+```mermaid
+flowchart LR
+    A["Socrata API<br/>NYC 311 erm2-nwe9"] --> B["Data Factory Pipeline<br/>or Dataflow Gen2"]
+    B --> C["OneLake Bronze<br/>raw parquet + metadata"]
+    C --> D["Lakehouse Silver<br/>clean service requests<br/>quality flags"]
+    D --> E["Warehouse or SQL Endpoint Gold<br/>fact + dimensions + KPI marts"]
+    D --> F["Fabric Notebook<br/>quality checks + anomaly detection"]
+    F --> E
+    E --> G["Power BI Semantic Model"]
+    G --> H["Power BI Report<br/>4-page operating dashboard"]
+```
 
-2. **Lakehouse or Warehouse Silver**
-   - Apply column standardization and timestamp parsing.
-   - Add quality flags for missing close date, invalid date ordering, missing borough, and duplicate keys.
+## Recommended Fabric Build Plan
 
-3. **Warehouse or SQL Endpoint Gold**
-   - Publish `fact_service_requests` plus date, agency, borough, complaint type, and location dimensions.
-   - Publish KPI tables for executive dashboards and operational drilldowns.
+### Bronze Layer
 
-4. **Notebook Analytics Layer**
-   - Run the rolling-baseline anomaly detector.
-   - Persist anomaly outputs to a gold table such as `gold.anomaly_events`.
+- Store raw files by ingestion date.
+- Persist source metadata: dataset ID, API URL, ingestion timestamp, requested limit, and record count.
+- Avoid overwriting raw extracts so quality issues can be audited later.
 
-5. **Power BI Semantic Model**
-   - Define measures in one governed semantic model.
-   - Certify definitions for backlog rate, resolution time, and closed-within-SLA metrics.
+### Silver Layer
 
-6. **Deployment Pipeline**
-   - Use dev/test/prod workspaces.
-   - Promote notebooks, SQL scripts, semantic models, and reports together.
-   - Parameterize sample size, refresh cadence, and storage paths by environment.
+- Standardize field names and data types.
+- Parse `created_date` and `closed_date`.
+- Normalize borough, agency, complaint type, and status.
+- Calculate `resolution_hours`.
+- Add flags for missing close date, invalid date order, missing borough, and duplicate unique keys.
 
-## Operating Cadence
+### Gold Layer
 
-- Daily: ingest latest 311 requests and refresh gold KPI tables.
-- Weekly: review anomaly events and high-risk backlog combinations.
-- Monthly: produce executive trend review with month-over-month growth and agency performance rankings.
+- Publish `fact_service_requests` at request grain.
+- Publish conformed dimensions: date, agency, borough, complaint type, and location.
+- Publish KPI marts for dashboard performance and QA:
+  - `daily_request_kpis`
+  - `monthly_request_kpis`
+  - `agency_performance_kpis`
+  - `borough_service_kpis`
+  - `complaint_type_kpis`
+  - `backlog_kpis`
+
+### Power BI Semantic Model
+
+- Use the request-grain fact table for certified measures.
+- Keep aggregated KPI tables for performance testing and QA comparisons.
+- Create a certified measure catalog for backlog, resolution, closure, anomaly, and risk metrics.
+- Mark the date table and hide surrogate keys.
+
+## Deployment Pipeline Concept
+
+Use separate Fabric workspaces for dev, test, and prod.
+
+| Stage | Purpose | Promotion Gate |
+|---|---|---|
+| Dev | Build and iterate on ingestion, transformations, and measures. | Unit checks pass on sample data. |
+| Test | Validate full refresh, data quality, and report behavior. | Stakeholder signoff on KPI definitions. |
+| Prod | Serve certified dashboard and scheduled refresh. | Refresh monitoring and support ownership in place. |
+
+## QA And Monitoring Checklist
+
+- Ingestion row count matches source API response count.
+- Duplicate `unique_key` count is reviewed.
+- Invalid date-order count is below agreed threshold or excluded from certified resolution metrics.
+- Open request logic is reviewed with business owners.
+- Power BI totals reconcile to gold table counts.
+- Scheduled anomaly outputs are reviewed before alerting stakeholders.
+- Refresh failures are logged and routed to an owner.
+- Fabric capacity and refresh duration are monitored after moving beyond a sample extract.
+
+## Honest Portfolio Wording
+
+Recommended phrasing:
+
+- "Designed a Fabric-ready architecture."
+- "Mapped local DuckDB/SQL layers to Fabric Lakehouse/Warehouse patterns."
+- "Prepared Power BI-ready exports and DAX measure documentation."
+
+Avoid claiming:
+
+- "Deployed to Fabric."
+- "Published a Power BI report."
+- "Configured production refresh."
+
+Those claims should only be added after actual Fabric and Power BI artifacts exist.
