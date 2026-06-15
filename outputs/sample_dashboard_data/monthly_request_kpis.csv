@@ -1,0 +1,2 @@
+request_month,total_requests,open_requests,closed_requests,backlog_rate,avg_resolution_hours,prior_month_requests,mom_request_growth_pct
+2026-06-01 00:00:00,100000,27970,72030,0.2797,15.453985212869668,,

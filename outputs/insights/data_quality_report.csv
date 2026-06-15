@@ -1,0 +1,7 @@
+rule,severity,failed_records,total_records,pass_rate,status
+unique_key uniqueness,high,0,100000,1.0,PASS
+created_date not null,high,0,100000,1.0,PASS
+closed_date greater than or equal to created_date when closed,high,17,100000,0.99983,REVIEW
+valid borough values,medium,0,100000,1.0,PASS
+resolution_hours non-negative,high,0,100000,1.0,PASS
+status normalization,medium,0,100000,1.0,PASS

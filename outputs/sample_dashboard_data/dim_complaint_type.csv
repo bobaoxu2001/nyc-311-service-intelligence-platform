@@ -1,0 +1,165 @@
+complaint_type_key,complaint_type
+1,AHV Inspection Unit
+2,APPLIANCE
+3,Abandoned Bike
+4,Abandoned Vehicle
+5,Air Quality
+6,Animal Facility - No Permit
+7,Animal in a Park
+8,Animal-Abuse
+9,Asbestos
+10,BEST/Site Safety
+11,Beach/Pool/Sauna Complaint
+12,Bench
+13,Bike Rack
+14,Bike/Roller/Skate
+15,Blocked Driveway
+16,Boilers
+17,Bridge Condition
+18,Broken Parking Meter
+19,Building Drinking Water Tank
+20,Building Marshal's Office
+21,Building/Use
+22,Bus Stop Shelter Complaint
+23,Bus Stop Shelter Placement
+24,Cannabis Retailer
+25,Commercial Disposal Complaint
+26,Construction Lead Dust
+27,Consumer Complaint
+28,Cooling Tower
+29,Cranes and Derricks
+30,Curb Condition
+31,DEP Street Condition
+32,DOOR/WINDOW
+33,Damaged Tree
+34,Day Care
+35,Dead Animal
+36,Dead/Dying Tree
+37,Derelict Vehicles
+38,Dirty Condition
+39,Disorderly Youth
+40,Drinking
+41,Drinking Water
+42,Drug Activity
+43,Dumpster Complaint
+44,E-Scooter
+45,ELECTRIC
+46,ELEVATOR
+47,Electrical
+48,Elevator
+49,Emergency Response Team (ERT)
+50,Encampment
+51,FLOORING/STAIRS
+52,Ferry Complaint
+53,Ferry Inquiry
+54,Food Establishment
+55,Food Poisoning
+56,For Hire Vehicle Complaint
+57,For Hire Vehicle Report
+58,Found Property
+59,GENERAL
+60,General Construction/Plumbing
+61,Graffiti
+62,Green Taxi Complaint
+63,Green Taxi Report
+64,HEAT/HOT WATER
+65,Harboring Bees/Wasps
+66,Hazardous Materials
+67,Highway Condition
+68,Highway Sign - Missing
+69,Homeless Person Assistance
+70,Illegal Animal Kept as Pet
+71,Illegal Animal Sold
+72,Illegal Dumping
+73,Illegal Fireworks
+74,Illegal Parking
+75,Illegal Posting
+76,Illegal Tree Damage
+77,Incorrect Data
+78,Indoor Air Quality
+79,Indoor Sewage
+80,Industrial Waste
+81,Institution Disposal Complaint
+82,Investigations and Discipline (IAD)
+83,Lead
+84,Lifeguard
+85,LinkNYC
+86,Litter Basket Complaint
+87,Litter Basket Request
+88,Lost Property
+89,Lot Condition
+90,Maintenance or Facility
+91,Missed Collection
+92,Mobile Food Vendor
+93,Mold
+94,Mosquitoes
+95,Municipal Parking Facility
+96,New Tree Request
+97,Noise
+98,Noise - Commercial
+99,Noise - Helicopter
+100,Noise - House of Worship
+101,Noise - Park
+102,Noise - Residential
+103,Noise - Street/Sidewalk
+104,Noise - Vehicle
+105,Non-Emergency Police Matter
+106,OUTSIDE BUILDING
+107,Obstruction
+108,Oil or Gas Spill
+109,Outdoor Dining
+110,Overgrown Tree/Branches
+111,PAINT/PLASTER
+112,PLUMBING
+113,Panhandling
+114,Pet Sale
+115,Plant
+116,Plumbing
+117,Poison Ivy
+118,Posting Advertisement
+119,Public Payphone Complaint
+120,Public Toilet
+121,Radioactive Material
+122,Real Time Enforcement
+123,Recycling Basket Complaint
+124,Residential Disposal Complaint
+125,Rodent
+126,Root/Sewer/Sidewalk Condition
+127,SAFETY
+128,Sanitation Worker or Vehicle Complaint
+129,Scaffold Safety
+130,Sewer
+131,Sidewalk Condition
+132,Smoking or Vaping
+133,Special Natural Area District (SNAD)
+134,Special Operations
+135,Special Projects Inspection Team (SPIT)
+136,Standing Water
+137,Street Condition
+138,Street Light Condition
+139,Street Sign - Damaged
+140,Street Sign - Dangling
+141,Street Sign - Missing
+142,Street Sweeping Complaint
+143,Tattooing
+144,Taxi Complaint
+145,Taxi Compliment
+146,Taxi Report
+147,Tobacco or Non-Tobacco Sale
+148,Traffic
+149,Traffic Signal Condition
+150,UNSANITARY CONDITION
+151,Unleashed Dog
+152,Unsanitary Animal Pvt Property
+153,Unsanitary Pigeon Condition
+154,Uprooted Stump
+155,Urinating in Public
+156,Vendor Enforcement
+157,Violation of Park Rules
+158,WATER LEAK
+159,Water Conservation
+160,Water Quality
+161,Water System
+162,Wayfinding
+163,Window Guard
+164,Wood Pile Remaining
