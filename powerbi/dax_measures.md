@@ -1,6 +1,6 @@
 # DAX Measures
 
-These measures are written for a Power BI model with `fact_service_requests` as the request-grain fact table and dimensions related as described in `powerbi/README.md`.
+These measures are written for a Power BI model with `fact_service_requests` as the request-grain fact table and dimensions related as described in `powerbi/README.md`. They are design-ready DAX definitions, not proof that a `.pbix` or Power BI Service semantic model has been created.
 
 ## Core Volume Measures
 
@@ -130,3 +130,42 @@ CALCULATE (
 - `[Closed Requests] + [Open Requests]` should equal `[Total Requests]` when status is normalized as closed versus not closed.
 - Resolution-hour measures should ignore null values from open requests or invalid date-order records.
 - Date slicers should use `dim_date[date_day]`, not raw date columns from the fact table.
+
+## Measure Certification Checklist
+
+For a client implementation, each measure should be certified with:
+
+| Field | Example |
+|---|---|
+| Business owner | Service operations lead |
+| Technical owner | BI semantic model owner |
+| Grain | Request-level fact table |
+| Filters | Date, agency, borough, complaint type |
+| Null handling | Resolution measures ignore null `resolution_hours` |
+| Exception handling | Invalid date-order rows reviewed before SLA certification |
+| Validation source | Gold SQL table row counts and KPI marts |
+
+## Executive And Analyst Measure Use
+
+Executive pages should prioritize:
+
+- `Total Requests`
+- `Backlog Rate`
+- `Avg Resolution Hours`
+- `Closed Within 7 Days %`
+- `Anomaly Count`
+
+Analyst pages can add:
+
+- `Median Resolution Hours`
+- `Closed Within 24 Hours %`
+- `MoM Request Growth %`
+- `Max Anomaly Z-Score`
+- `High Risk Backlog Count`
+
+## Governance Notes
+
+- Treat closure-rate measures as operational proxies unless official SLA definitions are confirmed.
+- Keep anomaly measures labeled as AI-assisted monitoring, not automated decisions.
+- Do not certify measures until data-quality exception handling is agreed.
+- If Power BI Service is used, document model endorsement, refresh ownership, and access controls.

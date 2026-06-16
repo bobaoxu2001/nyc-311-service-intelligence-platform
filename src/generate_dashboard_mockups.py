@@ -14,7 +14,7 @@ import matplotlib.dates as mdates
 import numpy as np
 import pandas as pd
 from matplotlib.gridspec import GridSpec
-from matplotlib.patches import FancyBboxPatch
+from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -123,7 +123,11 @@ def render_executive_overview(data: dict[str, pd.DataFrame]) -> None:
     pct_7d = weighted_average(borough, "pct_closed_within_7d")
 
     fig = plt.figure(figsize=(16, 10), facecolor="#F3F6F8")
-    add_title(fig, "Executive Overview", "NYC 311 service demand, backlog exposure, and response performance | Static portfolio preview")
+    add_title(
+        fig,
+        "Executive Operations Overview",
+        "NYC 311 demand, backlog exposure, and response performance | Static preview from CSV outputs",
+    )
     gs = GridSpec(4, 4, figure=fig, left=0.04, right=0.98, top=0.89, bottom=0.06, hspace=0.55, wspace=0.35)
 
     card(fig.add_subplot(gs[0, 0]), "Total Requests", fmt_int(total), "Recent 100K public-data sample", COLORS["blue"])
@@ -172,7 +176,7 @@ def render_agency_performance(data: dict[str, pd.DataFrame]) -> None:
     high_risk_count = int(backlog["high_risk_backlog_flag"].sum())
 
     fig = plt.figure(figsize=(16, 10), facecolor="#F3F6F8")
-    add_title(fig, "Agency Performance", "Volume, backlog exposure, and workflow review candidates by agency")
+    add_title(fig, "Agency Performance & Backlog Risk", "Volume, backlog exposure, and workflow review candidates by agency")
     gs = GridSpec(3, 3, figure=fig, left=0.04, right=0.98, top=0.89, bottom=0.06, hspace=0.52, wspace=0.42)
 
     card(fig.add_subplot(gs[0, 0]), "High-Risk Combos", fmt_int(high_risk_count), "Agency/borough rows flagged by backlog rule", COLORS["red"])
@@ -228,7 +232,11 @@ def render_borough_complaint(data: dict[str, pd.DataFrame]) -> None:
     )
 
     fig = plt.figure(figsize=(16, 10), facecolor="#F3F6F8")
-    add_title(fig, "Borough & Complaint Analysis", "Demand mix by borough and complaint type, with map-ready fields available in the star schema")
+    add_title(
+        fig,
+        "Borough / Complaint Demand Intelligence",
+        "Demand mix by borough and complaint type, with map-ready fields available in the star schema",
+    )
     gs = GridSpec(2, 3, figure=fig, left=0.04, right=0.98, top=0.88, bottom=0.08, hspace=0.45, wspace=0.42)
 
     ax = fig.add_subplot(gs[:, 0])
@@ -323,12 +331,118 @@ def render_ai_risk_monitor(data: dict[str, pd.DataFrame]) -> None:
     save(fig, "ai_risk_anomaly_monitor.png")
 
 
+def render_fabric_architecture_blueprint() -> None:
+    fig = plt.figure(figsize=(16, 8.5), facecolor="#F3F6F8")
+    ax = fig.add_subplot(111)
+    ax.axis("off")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+
+    fig.text(
+        0.04,
+        0.94,
+        "Microsoft Fabric-Ready Reference Architecture",
+        fontsize=22,
+        fontweight="bold",
+        color=COLORS["ink"],
+    )
+    fig.text(
+        0.04,
+        0.90,
+        "Local Python/DuckDB prototype mapped to Fabric components; not a deployed Fabric workspace",
+        fontsize=10.5,
+        color=COLORS["muted"],
+    )
+
+    nodes = [
+        ("NYC Open Data API\n311 Service Requests", 0.06, 0.66, COLORS["blue"]),
+        ("Data Factory /\nDataflow Gen2\norchestration", 0.22, 0.66, COLORS["cyan"]),
+        ("OneLake Raw /\nBronze zone\nparquet + metadata", 0.38, 0.66, COLORS["blue"]),
+        ("Fabric Lakehouse\nSilver layer\nclean + quality flags", 0.54, 0.66, COLORS["green"]),
+        ("Fabric Warehouse\nGold marts\nstar schema + KPIs", 0.70, 0.66, COLORS["orange"]),
+        ("Power BI\nSemantic model\nDAX + relationships", 0.86, 0.66, COLORS["purple"]),
+    ]
+
+    for text, x, y, color in nodes:
+        box = FancyBboxPatch(
+            (x - 0.065, y - 0.085),
+            0.13,
+            0.17,
+            boxstyle="round,pad=0.018,rounding_size=0.02",
+            transform=ax.transAxes,
+            facecolor="white",
+            edgecolor=color,
+            linewidth=2,
+        )
+        ax.add_patch(box)
+        ax.text(x, y, text, ha="center", va="center", fontsize=9.5, color=COLORS["ink"], fontweight="bold", transform=ax.transAxes)
+
+    for i in range(len(nodes) - 1):
+        x1 = nodes[i][1] + 0.07
+        x2 = nodes[i + 1][1] - 0.07
+        y = nodes[i][2]
+        arrow = FancyArrowPatch(
+            (x1, y),
+            (x2, y),
+            arrowstyle="-|>",
+            mutation_scale=14,
+            linewidth=1.8,
+            color=COLORS["muted"],
+            transform=ax.transAxes,
+        )
+        ax.add_patch(arrow)
+
+    lower_nodes = [
+        ("Executive dashboards\noperations, agency, borough", 0.78, 0.34, COLORS["blue"]),
+        ("AI Risk Monitor\nexplainable anomaly detection", 0.54, 0.34, COLORS["red"]),
+        ("Governance / QA layer\nmetric certification, access,\nmonitoring, responsible AI", 0.30, 0.34, COLORS["green"]),
+    ]
+    for text, x, y, color in lower_nodes:
+        box = FancyBboxPatch(
+            (x - 0.10, y - 0.075),
+            0.20,
+            0.15,
+            boxstyle="round,pad=0.018,rounding_size=0.02",
+            transform=ax.transAxes,
+            facecolor="white",
+            edgecolor=color,
+            linewidth=2,
+        )
+        ax.add_patch(box)
+        ax.text(x, y, text, ha="center", va="center", fontsize=9.5, color=COLORS["ink"], fontweight="bold", transform=ax.transAxes)
+
+    for start, end in [((0.86, 0.57), (0.78, 0.42)), ((0.70, 0.57), (0.54, 0.42)), ((0.54, 0.57), (0.30, 0.42)), ((0.30, 0.42), (0.54, 0.57)), ((0.30, 0.42), (0.86, 0.57))]:
+        ax.add_patch(
+            FancyArrowPatch(
+                start,
+                end,
+                arrowstyle="-|>",
+                mutation_scale=12,
+                linewidth=1.4,
+                color=COLORS["muted"],
+                alpha=0.8,
+                transform=ax.transAxes,
+            )
+        )
+
+    ax.text(
+        0.04,
+        0.06,
+        "Controls: source metadata, quality checks, certified metrics, role-based access, refresh monitoring, exception review, and human-in-the-loop anomaly validation.",
+        fontsize=10,
+        color=COLORS["muted"],
+        transform=ax.transAxes,
+    )
+    save(fig, "fabric_architecture_blueprint.png")
+
+
 def main() -> None:
     data = load_data()
     render_executive_overview(data)
     render_agency_performance(data)
     render_borough_complaint(data)
     render_ai_risk_monitor(data)
+    render_fabric_architecture_blueprint()
     print(f"Saved dashboard mockups to {MOCKUP_DIR}")
 
 
