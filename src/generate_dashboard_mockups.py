@@ -356,7 +356,7 @@ def render_fabric_architecture_blueprint() -> None:
 
     nodes = [
         ("NYC Open Data API\n311 Service Requests", 0.06, 0.66, COLORS["blue"]),
-        ("Data Factory /\nDataflow Gen2\norchestration", 0.22, 0.66, COLORS["cyan"]),
+        ("Local Ingestion /\nData Factory or\nDataflow Gen2", 0.22, 0.66, COLORS["cyan"]),
         ("OneLake Raw /\nBronze zone\nparquet + metadata", 0.38, 0.66, COLORS["blue"]),
         ("Fabric Lakehouse\nSilver layer\nclean + quality flags", 0.54, 0.66, COLORS["green"]),
         ("Fabric Warehouse\nGold marts\nstar schema + KPIs", 0.70, 0.66, COLORS["orange"]),
