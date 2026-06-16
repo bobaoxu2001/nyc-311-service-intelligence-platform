@@ -15,6 +15,10 @@ The NYC 311 Service Intelligence Platform demonstrates that full consulting loop
 - Adds explainable anomaly monitoring.
 - Documents governance, quality, implementation, and training plans.
 
+## 30-Second Role-Aligned Pitch
+
+"This project shows how I would approach a Data Analytics & AI Senior Consultant engagement: start with a real service operations problem, build a working local analytics pipeline, map it to a Microsoft Fabric architecture, design a Power BI semantic model, add explainable anomaly monitoring, and package the work with governance, adoption, and delivery documentation. It is intentionally positioned as a Fabric-ready local prototype, not a fake cloud deployment."
+
 ## JD-To-Project Mapping
 
 | JD Focus Area | Project Evidence |

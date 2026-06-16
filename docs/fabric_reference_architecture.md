@@ -20,6 +20,19 @@ flowchart LR
     I -.-> F
 ```
 
+## Current Local Artifact To Fabric Component Mapping
+
+| Current Local Artifact | Fabric Component | Purpose |
+|---|---|---|
+| `src/ingest_311.py` | Data Factory Pipeline, Dataflow Gen2, or Fabric Notebook | Parameterized extraction from NYC Open Data. |
+| `data/raw/nyc_311_raw.parquet` generated locally | OneLake Raw / Bronze | Preserve raw records and source metadata. |
+| `sql/silver/01_create_silver_service_requests.sql` | Fabric Lakehouse Silver table | Clean fields, parse dates, add resolution metrics and quality flags. |
+| `sql/gold/*.sql` | Fabric Warehouse Gold marts | Publish star schema and KPI tables for analytics. |
+| `src/quality_checks.py` | Fabric Notebook quality job | Persist data-quality results and exception counts. |
+| `src/anomaly_detection.py` | Fabric Notebook analytics job | Write explainable anomaly events for Power BI consumption. |
+| `powerbi/README.md` and `powerbi/dax_measures.md` | Power BI semantic model | Define relationships, DAX measures, and validation checklist. |
+| `docs/dashboard_mockups/*.png` | Power BI report page blueprint | Static previews only; real implementation would rebuild visuals in Power BI. |
+
 ## OneLake Raw / Bronze Zone
 
 Purpose:

@@ -44,6 +44,9 @@ The deliverable is not only a dashboard; it is a decision workflow for backlog t
 
 ## Likely Interviewer Q&A
 
+**Q: Tell me about this project.**  
+A: It is a Senior Consultant-style analytics case study using public NYC 311 data. I built a working local pipeline that ingests data, models bronze/silver/gold layers, exports Power BI-ready tables, validates data quality, and flags complaint spikes. Then I added the consulting layer: Fabric architecture mapping, governance and responsible AI notes, dashboard previews, executive recommendations, and a client enablement plan.
+
 **Q: Have you actually used Fabric here?**  
 A: No. This repository is a local prototype that maps to Fabric components. I describe it as a Microsoft Fabric-ready implementation blueprint, not as a Fabric deployment. The Fabric docs show how I would migrate it into OneLake, Lakehouse, Warehouse, Data Factory/Dataflow Gen2, Notebooks, and Power BI.
 
@@ -58,6 +61,9 @@ A: It is explainable anomaly detection, not forecasting. I would call it AI-assi
 
 **Q: How do you know the KPIs are trustworthy?**  
 A: The project includes quality checks for unique keys, created dates, invalid date ordering, borough normalization, non-negative resolution hours, and status normalization. The Power BI docs also include measure validation checks and metric certification guidance.
+
+**Q: How would you handle governance and responsible AI?**  
+A: I would certify KPI definitions with business owners, apply least-privilege workspace access, separate dev/test/prod workspaces, monitor refresh and quality thresholds, and require human review before acting on anomaly flags. The anomaly method is explainable statistical monitoring, so users can see the baseline and threshold behind each signal.
 
 **Q: What would you improve next?**  
 A: I would build a real `.pbix`, add incremental refresh, add CI tests with fixture data, deploy to a Fabric workspace when available, and extend the AI layer from anomaly detection to demand forecasting or backlog-risk scoring.

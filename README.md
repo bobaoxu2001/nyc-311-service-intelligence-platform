@@ -4,6 +4,14 @@
 
 This repository is intentionally honest: it has **not** been deployed in Microsoft Fabric, Azure, Power BI Desktop, or Power BI Service. It is a polished local prototype that shows how I would advise, design, and deliver a Fabric-aligned analytics solution for a client.
 
+## 30-Second Read
+
+- **Business problem:** public-sector leaders need a governed way to monitor 311 service demand, backlog, resolution performance, and unusual complaint spikes.
+- **What I built:** a runnable local ETL/ELT pipeline, medallion SQL model, Power BI-ready semantic design, static dashboard previews, anomaly monitor, and consulting documentation.
+- **Metrics produced:** 100,000 requests analyzed, 28.0% backlog rate, 15.5-hour average resolution time, 73.6% closed within 7 days, 15 anomaly events, and 17 data-quality exceptions.
+- **Fabric / Power BI mapping:** local DuckDB/SQL layers map to OneLake bronze, Lakehouse silver, Warehouse gold marts, Power BI semantic model, and Fabric Notebook anomaly monitoring.
+- **AI/analytics component:** explainable statistical anomaly detection for borough/complaint spikes, positioned as AI-assisted operational risk monitoring with human review.
+
 ## Executive Value Proposition
 
 Public-sector operations leaders need to know where service demand is rising, which agencies are exposed to backlog, whether resolution performance is reliable, and which unusual complaint spikes need human review. This project turns public NYC Open Data into a consulting-ready analytics deliverable:
@@ -54,9 +62,9 @@ These PNGs are **static previews generated from CSV outputs** by `src/generate_d
 | ![Borough Complaint Demand Intelligence](docs/dashboard_mockups/borough_complaint_analysis.png) | Borough / Complaint Demand Intelligence: geographic and complaint mix analysis. |
 | ![AI Risk and Anomaly Monitor](docs/dashboard_mockups/ai_risk_anomaly_monitor.png) | AI Risk & Anomaly Monitor: explainable spike detection and action queue. |
 
-## Why This Project Fits A Data Analytics & AI Senior Consultant Role
+## Why This Fits A Data Analytics & AI Senior Consultant Role
 
-| JD Requirement | Project Evidence |
+| Role Requirement | Project Evidence |
 |---|---|
 | Microsoft Fabric, OneLake, Lakehouse, Warehouse architecture | `docs/fabric_reference_architecture.md`, `docs/fabric_deployment_guide.md`, architecture blueprint PNG |
 | Data Factory / orchestration and scalable ETL/ELT | `Makefile`, `src/ingest_311.py`, SQL medallion folders, Fabric pipeline mapping |
