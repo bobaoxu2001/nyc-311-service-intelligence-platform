@@ -1,0 +1,35 @@
+{
+  "relationships": [
+    {
+      "from": "fact_service_requests.created_date_key",
+      "to": "dim_date.date_key",
+      "cardinality": "many-to-one",
+      "cross_filter": "single"
+    },
+    {
+      "from": "fact_service_requests.agency_key",
+      "to": "dim_agency.agency_key",
+      "cardinality": "many-to-one",
+      "cross_filter": "single"
+    },
+    {
+      "from": "fact_service_requests.borough_key",
+      "to": "dim_borough.borough_key",
+      "cardinality": "many-to-one",
+      "cross_filter": "single"
+    },
+    {
+      "from": "fact_service_requests.complaint_type_key",
+      "to": "dim_complaint_type.complaint_type_key",
+      "cardinality": "many-to-one",
+      "cross_filter": "single"
+    },
+    {
+      "from": "fact_service_requests.location_key",
+      "to": "dim_location.location_key",
+      "cardinality": "many-to-one",
+      "cross_filter": "single"
+    }
+  ],
+  "note": "Specification only. Build these relationships in Power BI Desktop or Fabric semantic model tooling."
+}

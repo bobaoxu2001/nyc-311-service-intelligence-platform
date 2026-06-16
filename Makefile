@@ -1,7 +1,7 @@
 PYTHON ?= python3
 LIMIT ?= 100000
 
-.PHONY: install ingest transform quality anomalies insights dashboard-mockups all clean-outputs
+.PHONY: install ingest transform quality anomalies insights predictive-model dashboard-mockups all clean-outputs
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -21,10 +21,13 @@ anomalies:
 insights:
 	$(PYTHON) src/generate_insights.py
 
+predictive-model:
+	$(PYTHON) src/predictive_modeling.py
+
 dashboard-mockups:
 	$(PYTHON) src/generate_dashboard_mockups.py
 
-all: ingest transform quality anomalies insights dashboard-mockups
+all: ingest transform quality anomalies insights predictive-model dashboard-mockups
 
 clean-outputs:
 	rm -f outputs/insights/*.md outputs/insights/*.csv

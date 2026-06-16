@@ -10,7 +10,7 @@ This scorecard summarizes the project from a Data Analytics & AI Senior Consulta
 | Analytics engineering | 5/5 | Bronze/silver/gold structure, star schema, KPI marts, and Power BI-ready semantic design. |
 | Power BI semantic model readiness | 4/5 | Relationship guidance, DAX catalog, QA checklist, and report design. Gap: no native `.pbix` yet. |
 | Data quality and reliability | 5/5 | Explicit validation rules and generated markdown/CSV quality report. |
-| AI/anomaly monitoring | 4/5 | Explainable statistical anomaly detection and AI risk monitor. Gap: not Azure ML or advanced predictive modeling yet. |
+| AI/anomaly monitoring | 4/5 | Explainable statistical anomaly detection plus local scikit-learn backlog-risk classifier. Gap: Azure ML job not submitted and no advanced forecasting yet. |
 | Governance/responsible AI | 4/5 | Dedicated governance doc, human-in-the-loop workflow, metric certification notes. Gap: no real tenant security implementation yet. |
 | Client advisory quality | 5/5 | Executive summary, case study, roadmap, role-alignment doc, and interview talk track. |
 | Stakeholder enablement | 5/5 | Training/adoption plan, KPI workshop, operating cadence, 30/60/90 rollout. |
@@ -24,7 +24,8 @@ This is a strong Senior Consultant-level portfolio project because it connects t
 
 - No real Fabric deployment yet.
 - No native Power BI `.pbix` yet.
-- No Azure ML, Cognitive Services, or production model registry implementation yet.
+- Azure ML-ready job assets exist, but no Azure ML job/run/model registry implementation yet.
+- No Cognitive Services implementation yet.
 - Current anomaly detection is explainable statistical monitoring, not advanced ML.
 - No automated CI/CD pipeline or Fabric deployment pipeline artifact yet.
 
@@ -33,8 +34,9 @@ This is a strong Senior Consultant-level portfolio project because it connects t
 1. Build a real Power BI `.pbix` report from the exported tables.
 2. Add incremental ingestion and partitioned refresh.
 3. Add backlog aging and SLA severity tiers.
-4. Add a fixture dataset and CI checks for transformations and quality rules.
-5. Deploy to a Fabric trial/workspace when real environment access is available.
+4. Submit the Azure ML job and register the model in a real workspace.
+5. Add a fixture dataset and CI checks for transformations, quality rules, and model training.
+6. Deploy to a Fabric trial/workspace when real environment access is available.
 
 ## Resume Positioning
 

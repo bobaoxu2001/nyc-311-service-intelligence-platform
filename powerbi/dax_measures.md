@@ -97,6 +97,24 @@ High Risk Backlog Flag =
 IF ( [High Risk Backlog Count] > 0, "High Risk", "Monitor" )
 ```
 
+If `ml_predictions` is imported as a standalone table:
+
+```DAX
+Predicted High Risk Count =
+COUNTROWS (
+    FILTER (
+        ml_predictions,
+        ml_predictions[predicted_high_risk_flag] = TRUE ()
+    )
+)
+
+Avg Predicted Risk Probability =
+AVERAGE ( ml_predictions[predicted_high_risk_probability] )
+
+Max Predicted Risk Probability =
+MAX ( ml_predictions[predicted_high_risk_probability] )
+```
+
 ## Optional Closed-Date Measure
 
 Use this only if `fact_service_requests[closed_date_key]` has an inactive relationship to `dim_date[date_key]`.
@@ -122,6 +140,7 @@ CALCULATE (
 | `Closed Within 24 Hours %`, `Closed Within 7 Days %` | Percentage, 1 decimal |
 | `MoM Request Growth %` | Percentage, 1 decimal |
 | `Max Anomaly Z-Score` | Decimal, 1 decimal |
+| `Avg Predicted Risk Probability` | Percentage, 1 decimal |
 
 ## QA Tests For Measures
 
@@ -130,6 +149,7 @@ CALCULATE (
 - `[Closed Requests] + [Open Requests]` should equal `[Total Requests]` when status is normalized as closed versus not closed.
 - Resolution-hour measures should ignore null values from open requests or invalid date-order records.
 - Date slicers should use `dim_date[date_day]`, not raw date columns from the fact table.
+- Predictive model measures should reconcile to `ml_predictions.csv` and remain clearly labeled as model outputs.
 
 ## Measure Certification Checklist
 
@@ -167,5 +187,6 @@ Analyst pages can add:
 
 - Treat closure-rate measures as operational proxies unless official SLA definitions are confirmed.
 - Keep anomaly measures labeled as AI-assisted monitoring, not automated decisions.
+- Keep predictive risk scores labeled as local model outputs unless an Azure ML deployment is actually configured.
 - Do not certify measures until data-quality exception handling is agreed.
 - If Power BI Service is used, document model endorsement, refresh ownership, and access controls.

@@ -1,0 +1,11 @@
+name: nyc311-backlog-risk
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - pandas>=2.2.0
+      - numpy>=1.26.0
+      - scikit-learn>=1.4.0
+      - joblib>=1.3.0

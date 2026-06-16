@@ -12,12 +12,12 @@ The NYC 311 Service Intelligence Platform demonstrates that full consulting loop
 - Builds a working local data pipeline on real public data.
 - Designs a Fabric-ready architecture.
 - Produces a Power BI-ready semantic model design.
-- Adds explainable anomaly monitoring.
+- Adds explainable anomaly monitoring and local predictive backlog-risk modeling.
 - Documents governance, quality, implementation, and training plans.
 
 ## 30-Second Role-Aligned Pitch
 
-"This project shows how I would approach a Data Analytics & AI Senior Consultant engagement: start with a real service operations problem, build a working local analytics pipeline, map it to a Microsoft Fabric architecture, design a Power BI semantic model, add explainable anomaly monitoring, and package the work with governance, adoption, and delivery documentation. It is intentionally positioned as a Fabric-ready local prototype, not a fake cloud deployment."
+"This project shows how I would approach a Data Analytics & AI Senior Consultant engagement: start with a real service operations problem, build a working local analytics pipeline, map it to a Microsoft Fabric architecture, design a Power BI semantic model, add explainable anomaly monitoring and local ML, and package the work with governance, adoption, and delivery documentation. It is intentionally positioned as a Fabric-ready local prototype, not a fake cloud deployment."
 
 ## JD-To-Project Mapping
 
@@ -28,7 +28,7 @@ The NYC 311 Service Intelligence Platform demonstrates that full consulting loop
 | Synapse-style data engineering / scalable ELT | DuckDB SQL bronze/silver/gold transformations that map to Lakehouse/Warehouse patterns |
 | Power BI semantic modeling | `powerbi/README.md`, `powerbi/dax_measures.md`, star schema outputs |
 | Dashboard development | `docs/dashboard_mockups/*.png`, `docs/dashboard_design.md` |
-| AI-driven automation and anomaly detection | `src/anomaly_detection.py`, `outputs/sample_dashboard_data/anomalies.csv` |
+| AI-driven automation, anomaly detection, predictive modeling | `src/anomaly_detection.py`, `src/predictive_modeling.py`, `azureml/`, `outputs/sample_dashboard_data/anomalies.csv` |
 | Data accuracy and reliability | `src/quality_checks.py`, `outputs/insights/data_quality_report.md` |
 | Governance, compliance, security | `docs/data_governance_responsible_ai.md` |
 | Client advisory | `outputs/insights/executive_summary.md`, `docs/consulting_case_study.md` |
@@ -46,14 +46,15 @@ The NYC 311 Service Intelligence Platform demonstrates that full consulting loop
 | Data pipeline | Local Python ingestion, DuckDB SQL transforms, generated outputs | Fabric Data Factory/Dataflow Gen2 orchestration |
 | Storage | Local parquet and DuckDB | OneLake, Lakehouse tables, Warehouse marts |
 | Reporting | CSV outputs, DAX documentation, static PNG mockups | Power BI semantic model and `.pbix`/Service report |
-| AI monitoring | Explainable rolling anomaly detection in Python | Scheduled Fabric Notebook writing anomaly events |
+| AI monitoring | Explainable rolling anomaly detection and local backlog-risk classifier | Scheduled Fabric Notebook or Azure ML job writing anomaly/model outputs |
 | Governance | Documented controls and quality checks | Workspace roles, certified model, refresh monitoring |
 
 ## Gaps And Honest Next Steps
 
 - No real Fabric workspace deployment yet.
 - No native `.pbix` report yet.
-- No Azure ML, Cognitive Services, or advanced forecasting model yet.
+- Azure ML-ready assets exist, but no Azure ML job was submitted.
+- No Cognitive Services or advanced forecasting model yet.
 - No CI pipeline with fixture data yet.
 - Current anomaly detection is statistical monitoring, not a production ML model.
 
@@ -70,5 +71,5 @@ Recommended next steps:
 - **Client advisory:** frames insights as operational decisions and 30-day actions.
 - **Solution architecture:** maps local layers to Fabric components with governance controls.
 - **Delivery execution:** includes runnable scripts, Makefile, generated outputs, and validation steps.
-- **AI-enabled analytics:** applies explainable anomaly detection and human review workflow.
+- **AI-enabled analytics:** applies explainable anomaly detection, local predictive modeling, and human review workflow.
 - **Stakeholder enablement:** includes training, adoption, and knowledge-transfer documentation.

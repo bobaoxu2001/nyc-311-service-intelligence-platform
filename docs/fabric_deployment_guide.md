@@ -123,3 +123,15 @@ Do not describe this repository as:
 - Azure ML or Cognitive Services implementation.
 
 Those statements should only be added after real artifacts exist.
+
+## Implementation Assets Added In `/fabric`
+
+The `/fabric` folder provides implementation-ready assets for a real Fabric build:
+
+- Notebook-ready scripts for quality checks, anomaly detection, and predictive modeling.
+- Pipeline blueprint for ingestion, transformation, quality checks, ML, and semantic model refresh.
+- Lakehouse/Warehouse table mapping.
+- Warehouse gold marts SQL blueprint.
+- Workspace setup and deployment checklist.
+
+These are still blueprints. They were not deployed because Fabric tooling and authenticated workspace access were not available in the current environment.
