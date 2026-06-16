@@ -1,0 +1,19 @@
+{
+  "tables": [
+    "fact_service_requests",
+    "dim_date",
+    "dim_agency",
+    "dim_borough",
+    "dim_complaint_type",
+    "dim_location",
+    "daily_request_kpis",
+    "monthly_request_kpis",
+    "agency_performance_kpis",
+    "borough_service_kpis",
+    "complaint_type_kpis",
+    "backlog_kpis",
+    "anomalies",
+    "ml_predictions"
+  ],
+  "note": "Metadata specification only. This is not a generated PBIP semantic model artifact."
+}

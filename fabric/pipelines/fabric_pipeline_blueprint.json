@@ -1,0 +1,56 @@
+{
+  "name": "pl_nyc311_daily_refresh_blueprint",
+  "description": "Blueprint for NYC 311 Fabric pipeline. This is not an exported Fabric artifact.",
+  "parameters": {
+    "dataset_id": "erm2-nwe9",
+    "sample_limit": 100000,
+    "refresh_mode": "daily"
+  },
+  "activities": [
+    {
+      "name": "Ingest_NYC_Open_Data_To_OneLake_Bronze",
+      "type": "DataFactoryOrDataflowGen2",
+      "depends_on": [],
+      "outputs": ["OneLake raw/bronze parquet", "source metadata"]
+    },
+    {
+      "name": "Build_Lakehouse_Silver_Service_Requests",
+      "type": "SQL_or_Notebook",
+      "depends_on": ["Ingest_NYC_Open_Data_To_OneLake_Bronze"],
+      "outputs": ["silver_service_requests"]
+    },
+    {
+      "name": "Run_Data_Quality_Checks",
+      "type": "Notebook",
+      "notebook": "fabric/notebooks/quality_checks_notebook.py",
+      "depends_on": ["Build_Lakehouse_Silver_Service_Requests"],
+      "outputs": ["data_quality_report"]
+    },
+    {
+      "name": "Build_Warehouse_Gold_Marts",
+      "type": "WarehouseSQL",
+      "depends_on": ["Run_Data_Quality_Checks"],
+      "outputs": ["fact_service_requests", "dimensions", "kpi_marts"]
+    },
+    {
+      "name": "Run_Anomaly_Detection",
+      "type": "Notebook",
+      "notebook": "fabric/notebooks/anomaly_detection_notebook.py",
+      "depends_on": ["Build_Warehouse_Gold_Marts"],
+      "outputs": ["anomaly_events"]
+    },
+    {
+      "name": "Run_Predictive_Modeling",
+      "type": "Notebook",
+      "notebook": "fabric/notebooks/predictive_modeling_notebook.py",
+      "depends_on": ["Build_Warehouse_Gold_Marts"],
+      "outputs": ["ml_backlog_risk_predictions", "model_card"]
+    },
+    {
+      "name": "Refresh_PowerBI_Semantic_Model",
+      "type": "PowerBIRefresh",
+      "depends_on": ["Run_Anomaly_Detection", "Run_Predictive_Modeling"],
+      "outputs": ["Power BI semantic model refresh status"]
+    }
+  ]
+}

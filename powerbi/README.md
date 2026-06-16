@@ -27,6 +27,7 @@ Recommended import tables:
 - `complaint_type_kpis.csv`
 - `backlog_kpis.csv`
 - `anomalies.csv`
+- `ml_predictions.csv`
 
 Note: the GitHub repo may not commit the largest generated extracts. Run the pipeline locally to regenerate any missing CSVs.
 
@@ -107,6 +108,12 @@ Keep `closed_date_key` inactive unless you need closed-date reporting. Use `USER
    - Recommended action text.
    - Intended audience: analysts and operations owners reviewing unusual spikes.
 
+5. **Predictive Backlog Risk**
+   - Table: agency/borough predicted high-risk probability and current backlog rate.
+   - Bar chart: top predicted risk combinations.
+   - Model card note and responsible-use caveat.
+   - Intended audience: analysts and operations managers prioritizing review.
+
 ## Executive Vs. Analyst View Design
 
 Executive view:
@@ -143,6 +150,7 @@ Before presenting the report:
 - Confirm date filters affect fact-based measures as expected.
 - Confirm borough, agency, and complaint slicers filter all visuals.
 - Confirm anomaly rows match `outputs/sample_dashboard_data/anomalies.csv`.
+- Confirm predictive rows match `outputs/sample_dashboard_data/ml_predictions.csv` when generated.
 - Confirm data-quality exceptions are visible in notes or a QA appendix.
 - Confirm no visual claims deployment in Fabric or Power BI Service unless actually deployed.
 - Confirm static mockups are labeled as previews, not screenshots from Power BI.
@@ -169,3 +177,12 @@ make dashboard-mockups
 ```
 
 These images are intended for portfolio review only. They are not Power BI screenshots, and they are not evidence of a deployed report.
+
+## Implementation Package Files
+
+- `report_specification.md`
+- `page_wireframes.md`
+- `semantic_model_validation.md`
+- `powerbi_service_deployment_plan.md`
+- `semantic_model/tables.json`
+- `semantic_model/relationships.json`

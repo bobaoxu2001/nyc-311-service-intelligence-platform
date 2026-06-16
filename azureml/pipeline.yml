@@ -1,0 +1,19 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+display_name: nyc311-analytics-ml-pipeline-blueprint
+description: Blueprint pipeline for training backlog-risk model after Fabric/ELT outputs are available.
+jobs:
+  train_backlog_risk_model:
+    type: command
+    code: ..
+    command: >-
+      python azureml/train.py
+      --input-dir outputs/sample_dashboard_data
+      --output-dir ${{outputs.model_outputs}}
+    environment:
+      image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
+      conda_file: azureml/conda.yml
+    compute: azureml:cpu-cluster
+    outputs:
+      model_outputs:
+        type: uri_folder

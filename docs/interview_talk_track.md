@@ -2,7 +2,7 @@
 
 ## 30-Second Pitch For A Senior Consultant Role
 
-I built the NYC 311 Service Intelligence Platform as a Senior Consultant-style analytics and AI portfolio project. It is a working local pipeline on real NYC Open Data, but the broader deliverable is a Fabric-ready implementation blueprint: medallion architecture, Power BI semantic model design, data-quality controls, explainable anomaly monitoring, governance notes, and a client enablement plan. I intentionally avoid claiming Fabric or Power BI deployment because the current artifact is a local prototype.
+I built the NYC 311 Service Intelligence Platform as a Senior Consultant-style analytics and AI portfolio project. It is a working local pipeline on real NYC Open Data, but the broader deliverable is a Fabric-ready implementation blueprint: medallion architecture, Power BI semantic model design, data-quality controls, explainable anomaly monitoring, local predictive modeling, Azure ML-ready job assets, governance notes, and a client enablement plan. I intentionally avoid claiming Fabric or Power BI deployment because the current artifact is a local prototype.
 
 ## 2-Minute Walkthrough
 
@@ -10,7 +10,7 @@ The client scenario is public-sector service operations. Leaders need to underst
 
 I built the pipeline around the NYC Open Data 311 dataset, Socrata ID `erm2-nwe9`. The local pipeline ingests a configurable sample, lands raw data, transforms it through bronze/silver/gold SQL layers, creates a Power BI-ready star schema, exports KPI tables, validates data quality, and runs explainable anomaly detection.
 
-The current sample processed 100,000 requests. It found a 28.0% backlog rate, 15.5-hour average resolution time, 73.6% closed within 7 days, and 15 anomaly events. I also added dashboard mockups, an executive summary, a Fabric migration guide, governance/responsible AI documentation, and a client training plan.
+The current sample processed 100,000 requests. It found a 28.0% backlog rate, 15.5-hour average resolution time, 73.6% closed within 7 days, and 15 anomaly events. I also added a scikit-learn backlog-risk classifier, dashboard mockups, an executive summary, a Fabric migration package, Azure ML-ready assets, governance/responsible AI documentation, and a client training plan.
 
 The point is to show how I think as a consultant: not only building code, but designing an architecture, explaining tradeoffs, validating data, preparing stakeholder adoption, and being honest about what is built versus proposed.
 
@@ -57,7 +57,19 @@ A: DuckDB lets me build a reproducible portfolio project without requiring a clo
 A: I would start with KPI and data-quality workshops, create dev/test/prod Fabric workspaces, schedule ingestion into OneLake, build silver and gold tables, implement quality checks and anomaly notebooks, create a certified Power BI semantic model, and train users through a 30/60/90-day adoption plan.
 
 **Q: Is this predictive modeling?**  
-A: It is explainable anomaly detection, not forecasting. I would call it AI-assisted monitoring because it identifies unusual patterns and recommends review actions. A next step could be forecasting demand or classifying backlog risk once stakeholders validate the baseline process.
+A: Yes, now there is a local scikit-learn backlog-risk classifier that predicts high-risk agency/borough combinations from generated KPI outputs. It is intentionally lightweight and explainable. Separately, the anomaly detector flags daily complaint spikes. I would still describe both as AI-assisted monitoring until a production Azure ML workflow is implemented.
+
+**Q: Where is the advanced ML?**  
+A: The implemented model is a practical Random Forest classifier for backlog-risk prioritization, with a prediction file, model report, and model card. It is not advanced deep learning. For a real client, I would first validate the baseline model and then consider demand forecasting, backlog-risk scoring, or text classification once the operating workflow is adopted.
+
+**Q: What would Azure ML add?**  
+A: Azure ML would provide managed training jobs, versioned environments, model registration, run tracking, reproducibility, and a production path for scheduled scoring. The `azureml/` folder includes job assets, but no job was submitted because Azure CLI was not available in this environment.
+
+**Q: Do you have Power BI artifacts?**  
+A: I have a Power BI implementation package: semantic model specs, relationships, DAX measures, report page wireframes, validation checklist, and service deployment plan. I do not claim a `.pbix` because Power BI Desktop or project tooling was not available here.
+
+**Q: How would you use Cognitive Services responsibly?**  
+A: I would only add Cognitive Services for a specific use case, such as classifying resolution descriptions or drafting executive narratives from certified KPI tables. I would require privacy review, grounding in approved data, human approval, and logging. I would not use it to invent root causes for anomalies.
 
 **Q: How do you know the KPIs are trustworthy?**  
 A: The project includes quality checks for unique keys, created dates, invalid date ordering, borough normalization, non-negative resolution hours, and status normalization. The Power BI docs also include measure validation checks and metric certification guidance.
@@ -66,7 +78,7 @@ A: The project includes quality checks for unique keys, created dates, invalid d
 A: I would certify KPI definitions with business owners, apply least-privilege workspace access, separate dev/test/prod workspaces, monitor refresh and quality thresholds, and require human review before acting on anomaly flags. The anomaly method is explainable statistical monitoring, so users can see the baseline and threshold behind each signal.
 
 **Q: What would you improve next?**  
-A: I would build a real `.pbix`, add incremental refresh, add CI tests with fixture data, deploy to a Fabric workspace when available, and extend the AI layer from anomaly detection to demand forecasting or backlog-risk scoring.
+A: I would build a real `.pbix` or PBIP project, submit and track the Azure ML job in a real workspace, deploy the Fabric package to dev/test/prod workspaces, add incremental refresh, add CI tests with fixture data, and extend the AI layer to demand forecasting or text classification if the client has a validated use case.
 
 **Q: What makes this Senior Consultant-level?**  
 A: It includes solution architecture, governance, delivery roadmap, stakeholder training, adoption cadence, and responsible AI notes in addition to the working data pipeline. That is the difference between a coding project and a consulting deliverable.

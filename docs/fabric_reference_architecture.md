@@ -146,3 +146,13 @@ Suggested cadence:
 - Push reusable aggregations into gold marts where report performance requires it.
 - Monitor Fabric capacity, refresh duration, and semantic model size.
 - Avoid overengineering advanced ML until the baseline operational monitoring process is adopted.
+
+## Implementation Assets Added In `/fabric`
+
+- `fabric/README.md`: package overview and truthfulness notes.
+- `fabric/deployment_checklist.md`: deployment and QA checklist.
+- `fabric/workspace_setup.md`: workspace, security, and naming plan.
+- `fabric/lakehouse_table_mapping.md`: local-to-Fabric table mapping.
+- `fabric/warehouse_gold_marts.sql`: Warehouse gold mart SQL blueprint.
+- `fabric/pipelines/fabric_pipeline_blueprint.json`: orchestration blueprint.
+- `fabric/notebooks/`: quality, anomaly, and predictive modeling notebook-ready scripts.

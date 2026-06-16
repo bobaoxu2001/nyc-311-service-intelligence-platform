@@ -1,16 +1,16 @@
 # NYC 311 Service Intelligence Platform
 
-**Senior Consultant portfolio case study:** a local Python/DuckDB/SQL analytics prototype that maps real NYC 311 Service Request data to a **Microsoft Fabric-ready implementation blueprint**, **Power BI-ready semantic model design**, explainable AI/anomaly monitoring, governance controls, and a client adoption roadmap.
+**Senior Consultant portfolio case study:** a local Python/DuckDB/SQL analytics prototype that maps real NYC 311 Service Request data to a **Microsoft Fabric-ready implementation blueprint**, **Power BI-ready semantic model design**, explainable AI/anomaly monitoring, local predictive modeling, governance controls, and a client adoption roadmap.
 
 This repository is intentionally honest: it has **not** been deployed in Microsoft Fabric, Azure, Power BI Desktop, or Power BI Service. It is a polished local prototype that shows how I would advise, design, and deliver a Fabric-aligned analytics solution for a client.
 
 ## 30-Second Read
 
 - **Business problem:** public-sector leaders need a governed way to monitor 311 service demand, backlog, resolution performance, and unusual complaint spikes.
-- **What I built:** a runnable local ETL/ELT pipeline, medallion SQL model, Power BI-ready semantic design, static dashboard previews, anomaly monitor, and consulting documentation.
+- **What I built:** a runnable local ETL/ELT pipeline, medallion SQL model, Power BI-ready semantic design, static dashboard previews, anomaly monitor, local backlog-risk ML model, and consulting documentation.
 - **Metrics produced:** 100,000 requests analyzed, 28.0% backlog rate, 15.5-hour average resolution time, 73.6% closed within 7 days, 15 anomaly events, and 17 data-quality exceptions.
 - **Fabric / Power BI mapping:** local DuckDB/SQL layers map to OneLake bronze, Lakehouse silver, Warehouse gold marts, Power BI semantic model, and Fabric Notebook anomaly monitoring.
-- **AI/analytics component:** explainable statistical anomaly detection for borough/complaint spikes, positioned as AI-assisted operational risk monitoring with human review.
+- **AI/analytics component:** explainable anomaly detection plus a real local scikit-learn backlog-risk classifier, both positioned as AI-assisted operational risk monitoring with human review.
 
 ## Executive Value Proposition
 
@@ -20,6 +20,7 @@ Public-sector operations leaders need to know where service demand is rising, wh
 - **Fabric-ready architecture:** OneLake raw/bronze, Lakehouse silver, Warehouse gold marts, Data Factory/Dataflow Gen2 orchestration, Power BI semantic model.
 - **Power BI-ready semantic model:** request-grain fact table, conformed dimensions, DAX measure catalog, QA checklist, and report-page blueprint.
 - **AI-assisted monitoring:** explainable anomaly detection using rolling baselines, z-scores, and IQR checks, with human-in-the-loop escalation.
+- **Predictive modeling:** local scikit-learn backlog-risk classifier with predictions, model report, and model card; Azure ML-ready training assets are included but not submitted.
 - **Governance and delivery:** metric certification, data-quality controls, responsible AI notes, stakeholder enablement, and 30/60/90-day rollout plan.
 
 ## Headline Metrics From Current Sample
@@ -69,7 +70,7 @@ These PNGs are **static previews generated from CSV outputs** by `src/generate_d
 | Microsoft Fabric, OneLake, Lakehouse, Warehouse architecture | `docs/fabric_reference_architecture.md`, `docs/fabric_deployment_guide.md`, architecture blueprint PNG |
 | Data Factory / orchestration and scalable ETL/ELT | `Makefile`, `src/ingest_311.py`, SQL medallion folders, Fabric pipeline mapping |
 | Power BI semantic modeling and dashboard development | `powerbi/README.md`, `powerbi/dax_measures.md`, dashboard mockups |
-| AI-driven automation, anomaly detection, predictive analytics mindset | `src/anomaly_detection.py`, `outputs/sample_dashboard_data/anomalies.csv`, AI Risk mockup |
+| AI-driven automation, anomaly detection, predictive analytics mindset | `src/anomaly_detection.py`, `src/predictive_modeling.py`, `outputs/sample_dashboard_data/anomalies.csv`, AI Risk mockup |
 | Data accuracy, consistency, reliability | `src/quality_checks.py`, `docs/data_quality.md`, `outputs/insights/data_quality_report.md` |
 | Governance, compliance, security, responsible AI | `docs/data_governance_responsible_ai.md` |
 | Client advisory and stakeholder communication | `outputs/insights/executive_summary.md`, `docs/consulting_case_study.md`, `docs/senior_consultant_role_alignment.md` |
@@ -101,6 +102,7 @@ python src/transform_311.py
 python src/quality_checks.py
 python src/anomaly_detection.py
 python src/generate_insights.py
+python src/predictive_modeling.py
 python src/generate_dashboard_mockups.py
 ```
 
@@ -113,15 +115,30 @@ python src/generate_dashboard_mockups.py
 
 ## Repository Guide
 
-- `src/`: ingestion, transformation orchestration, quality checks, anomaly detection, insight generation, dashboard mockup generation.
+- `src/`: ingestion, transformation orchestration, quality checks, anomaly detection, predictive modeling, insight generation, dashboard mockup generation.
+- `azureml/`: Azure ML-ready training job assets for the backlog-risk classifier.
+- `fabric/`: Fabric implementation package with notebook, pipeline, Lakehouse, and Warehouse blueprints.
 - `sql/`: bronze, silver, and gold SQL transformations.
-- `powerbi/`: semantic model design, relationship guidance, DAX measures, validation checklist.
+- `powerbi/`: semantic model design, relationship guidance, DAX measures, report specs, validation checklist, service deployment plan.
 - `docs/`: Fabric blueprint, governance, client roadmap, enablement plan, interview talk track, scorecard.
 - `outputs/`: committed sample KPI/anomaly outputs and consulting summaries.
+
+## Implementation Maturity
+
+| Area | Current Status | Artifact |
+|---|---|---|
+| Local ETL/ELT | Implemented | `src/`, `sql/`, `Makefile` |
+| Data quality | Implemented | `src/quality_checks.py`, `outputs/insights/data_quality_report.md` |
+| Anomaly detection | Implemented locally | `src/anomaly_detection.py`, `outputs/sample_dashboard_data/anomalies.csv` |
+| Predictive modeling | Implemented locally | `src/predictive_modeling.py`, `outputs/sample_dashboard_data/ml_predictions.csv` |
+| Microsoft Fabric | Deployment-ready package, not deployed | `fabric/`, `docs/fabric_deployment_guide.md` |
+| Power BI | Implementation package, no `.pbix` | `powerbi/` |
+| Azure ML | Job package, not submitted | `azureml/` |
+| Power BI Service | Deployment plan, not published | `powerbi/powerbi_service_deployment_plan.md` |
 
 ## Important Truthfulness Notes
 
 - This is a **local prototype that maps to Fabric components**.
 - The repo contains a **Power BI-ready semantic model design**, not a `.pbix` file.
-- The anomaly detector is **explainable statistical monitoring / AI-assisted analytics**, not a black-box LLM or Azure ML deployment.
+- The anomaly detector and predictive model are **explainable local analytics / AI-assisted monitoring**, not black-box LLMs or deployed Azure ML services.
 - A real client implementation would require Fabric workspace configuration, security setup, refresh scheduling, stakeholder UAT, and Power BI report development.

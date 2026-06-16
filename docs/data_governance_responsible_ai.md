@@ -1,6 +1,6 @@
 # Data Governance And Responsible AI
 
-This project uses public NYC 311 data and explainable statistical anomaly detection. It does not use a black-box LLM system, Azure ML deployment, or automated decisioning workflow.
+This project uses public NYC 311 data, explainable statistical anomaly detection, and a local scikit-learn backlog-risk classifier. It does not use a black-box LLM system, Azure ML deployment, Cognitive Services call, or automated decisioning workflow.
 
 ## Data Quality Controls
 
@@ -56,7 +56,7 @@ NYC 311 data is public, but request-level records may include location details s
 
 ## Responsible AI Principles
 
-The anomaly layer should follow these principles:
+The anomaly and predictive modeling layers should follow these principles:
 
 - **Explainability:** use transparent rolling baselines and z-score/IQR logic.
 - **Human oversight:** require operational review before escalation.
@@ -79,15 +79,16 @@ This makes it possible to explain why a spike was flagged and whether the signal
 
 Recommended workflow:
 
-1. Analytics job flags anomaly.
-2. Analyst reviews volume, borough, complaint type, and recent baseline.
-3. Operations owner confirms whether weather, seasonality, staffing, events, or system changes explain the spike.
+1. Analytics job flags anomaly or model scores a high backlog-risk combination.
+2. Analyst reviews volume, borough, complaint type, agency, recent baseline, and model probability.
+3. Operations owner confirms whether weather, seasonality, staffing, events, queue policy, or system changes explain the signal.
 4. Escalation is opened only after validation.
 5. Outcome is documented for threshold tuning.
 
 ## Model Limitations
 
 - The current method detects spikes, not root causes.
+- The current local classifier predicts backlog-risk labels derived from operational rules; it is not an independently validated causal model.
 - It does not forecast future demand.
 - It can flag expected seasonality if the history window is short.
 - It depends on source-data timeliness and status accuracy.
