@@ -1,6 +1,8 @@
-# Power BI Dashboard Design
+# Dashboard Design
 
-## Page 1: Executive Overview
+The PNGs in `docs/dashboard_mockups/` are static previews generated from CSV outputs. They are intended to show dashboard design thinking for portfolio review. A real Power BI implementation would use the documented semantic model relationships and DAX measures in `powerbi/`.
+
+## Page 1: Executive Operations Overview
 
 Audience: city operations executives or client service leaders.
 
@@ -14,7 +16,7 @@ Visuals:
 
 Primary question: Where is demand rising, and is service performance keeping up?
 
-## Page 2: Agency Performance
+## Page 2: Agency Performance & Backlog Risk
 
 Audience: agency managers and transformation leads.
 
@@ -26,7 +28,7 @@ Visuals:
 
 Primary question: Which agencies need workflow review, staffing support, or SLA escalation?
 
-## Page 3: Borough & Complaint Analysis
+## Page 3: Borough / Complaint Demand Intelligence
 
 Audience: operations analysts and local service teams.
 
@@ -51,3 +53,5 @@ Visuals:
 - Action tracker panel for root-cause review, staffing review, and communications follow-up.
 
 Primary question: Which unusual spikes or backlog risks require proactive intervention?
+
+Important note: anomaly outputs should be framed as explainable AI-assisted monitoring that supports human review, not as automated decisioning.

@@ -1,24 +1,22 @@
 # NYC 311 Service Intelligence Platform
 
-**Consulting portfolio case study:** turning public NYC 311 service-request data into a Fabric-ready analytics architecture, Power BI-ready model, explainable anomaly monitor, and executive operating recommendations.
+**Senior Consultant portfolio case study:** a local Python/DuckDB/SQL analytics prototype that maps real NYC 311 Service Request data to a **Microsoft Fabric-ready implementation blueprint**, **Power BI-ready semantic model design**, explainable AI/anomaly monitoring, governance controls, and a client adoption roadmap.
 
-This project is designed for a **Consultant, Data Analytics & AI** interview. It shows how I would help a client move from raw operational data to a practical decision-support product: governed metrics, quality checks, dashboard design, and AI-assisted risk monitoring.
+This repository is intentionally honest: it has **not** been deployed in Microsoft Fabric, Azure, Power BI Desktop, or Power BI Service. It is a polished local prototype that shows how I would advise, design, and deliver a Fabric-aligned analytics solution for a client.
 
 ## Executive Value Proposition
 
-City service leaders need to know where demand is rising, which teams are exposed to backlog, and which complaint spikes need action before they become service failures. This project uses public NYC Open Data to build a repeatable local analytics pipeline that answers those questions with transparent SQL, Python, and Power BI-ready outputs.
+Public-sector operations leaders need to know where service demand is rising, which agencies are exposed to backlog, whether resolution performance is reliable, and which unusual complaint spikes need human review. This project turns public NYC Open Data into a consulting-ready analytics deliverable:
 
-**What a client gets:**
-
-- A medallion data model that separates raw ingestion, cleaned service requests, and certified KPI outputs.
-- A Power BI-ready star schema for request-level drilldown and executive KPI reporting.
-- Explainable anomaly detection for daily complaint spikes by borough and complaint type.
-- Consulting-style recommendations, implementation roadmap, and data-quality notes.
-- A Fabric-ready guide that maps the local implementation to OneLake, Lakehouse/Warehouse, notebooks, Data Factory/Dataflow Gen2, and Power BI.
+- **Business impact:** backlog triage, agency performance review, complaint demand intelligence, and executive operating cadence.
+- **Fabric-ready architecture:** OneLake raw/bronze, Lakehouse silver, Warehouse gold marts, Data Factory/Dataflow Gen2 orchestration, Power BI semantic model.
+- **Power BI-ready semantic model:** request-grain fact table, conformed dimensions, DAX measure catalog, QA checklist, and report-page blueprint.
+- **AI-assisted monitoring:** explainable anomaly detection using rolling baselines, z-scores, and IQR checks, with human-in-the-loop escalation.
+- **Governance and delivery:** metric certification, data-quality controls, responsible AI notes, stakeholder enablement, and 30/60/90-day rollout plan.
 
 ## Headline Metrics From Current Sample
 
-The committed sample outputs were generated from a recent **100,000-record** public NYC Open Data extract ingested on **2026-06-15 UTC**. Raw parquet and DuckDB files are intentionally not committed.
+The committed sample outputs were generated from a recent **100,000-record** public NYC Open Data extract ingested on **2026-06-15 UTC**. Raw parquet, DuckDB files, and the largest generated CSV extracts are intentionally not committed.
 
 | Metric | Result | Why It Matters |
 |---|---:|---|
@@ -30,87 +28,53 @@ The committed sample outputs were generated from a recent **100,000-record** pub
 | Anomalies detected | 15 | Flags unusual borough/complaint spikes for investigation. |
 | Data-quality exceptions | 17 invalid date-order rows | Shows validation rather than blind reporting. |
 
-## Dashboard Preview
+## Architecture Blueprint
 
-These PNGs are static dashboard mockups generated from the CSV outputs with `src/generate_dashboard_mockups.py`. They are **not** Power BI exports. They preview the intended report experience for recruiters and interviewers.
-
-### Executive Overview
-
-![Executive Overview](docs/dashboard_mockups/executive_overview.png)
-
-### Agency Performance
-
-![Agency Performance](docs/dashboard_mockups/agency_performance.png)
-
-### Borough & Complaint Analysis
-
-![Borough and Complaint Analysis](docs/dashboard_mockups/borough_complaint_analysis.png)
-
-### AI Risk & Anomaly Monitor
-
-![AI Risk and Anomaly Monitor](docs/dashboard_mockups/ai_risk_anomaly_monitor.png)
-
-## Key Insights
-
-- **Backlog triage is the main management theme.** The current sample shows a 28.0% open-request rate, which is high enough to justify agency-level queue review.
-- **Demand is concentrated.** Illegal Parking is the highest-volume complaint category with 16,538 requests.
-- **Brooklyn carries the largest demand load.** Brooklyn has 31,128 requests in the current sample.
-- **Some complaint categories have operational risk beyond volume.** Damaged Tree, UNSANITARY CONDITION, and Street Condition show materially higher backlog or resolution-time exposure than high-volume noise and parking categories.
-- **Anomaly monitoring adds early-warning value.** The sample flagged Water System, Sewer, Traffic Signal Condition, and related spikes across boroughs on 2026-06-11 and 2026-06-12.
-- **The quality layer matters.** Most validation rules pass, but 17 invalid date-order rows should be resolved before certifying resolution-time metrics.
-
-## Architecture
+![Fabric architecture blueprint](docs/dashboard_mockups/fabric_architecture_blueprint.png)
 
 ```mermaid
 flowchart LR
-    A["NYC Open Data API<br/>311 Service Requests<br/>erm2-nwe9"] --> B["Bronze<br/>Raw parquet sample"]
-    B --> C["Silver<br/>Parsed dates, normalized fields,<br/>resolution metrics, quality flags"]
-    C --> D["Gold Star Schema<br/>fact_service_requests<br/>dim_date, dim_agency, dim_borough,<br/>dim_complaint_type, dim_location"]
-    C --> E["Gold KPI Tables<br/>daily, monthly, agency,<br/>borough, complaint, backlog"]
-    E --> F["Power BI-ready CSV Outputs"]
-    E --> G["Rule-Based Executive Summary"]
-    E --> H["Explainable Anomaly Detection<br/>Rolling mean, z-score, IQR"]
-    H --> F
-    H --> I["AI Risk Monitor"]
-    G --> J["Consulting Recommendations"]
+    A["NYC Open Data API<br/>311 Service Requests"] --> B["Local Ingestion<br/>Python"]
+    B --> C["Bronze<br/>Raw parquet sample"]
+    C --> D["Silver<br/>Cleaned requests + quality flags"]
+    D --> E["Gold<br/>Star schema + KPI marts"]
+    E --> F["Power BI-ready CSVs<br/>Semantic model design"]
+    E --> G["AI-assisted anomaly monitor"]
+    E --> H["Executive summary + roadmap"]
 ```
 
-## Repository Structure
+## Dashboard Preview
 
-```text
-.
-├── data/
-│   ├── raw/                         # gitkeep only; generated raw files ignored
-│   └── processed/                   # gitkeep only; generated DuckDB ignored
-├── docs/
-│   ├── dashboard_mockups/           # static PNG previews generated from CSV outputs
-│   ├── consulting_case_study.md
-│   ├── client_implementation_roadmap.md
-│   ├── fabric_deployment_guide.md
-│   ├── interview_talk_track.md
-│   └── project_review_scorecard.md
-├── outputs/
-│   ├── insights/                    # committed consulting summaries and QA report
-│   └── sample_dashboard_data/       # committed small KPI/anomaly CSV samples
-├── powerbi/
-│   ├── README.md
-│   └── dax_measures.md
-├── sql/
-│   ├── bronze/
-│   ├── silver/
-│   └── gold/
-├── src/
-└── Makefile
-```
+These PNGs are **static previews generated from CSV outputs** by `src/generate_dashboard_mockups.py`. They show dashboard design thinking only. A real Power BI implementation would use the documented semantic model, relationships, and DAX measures in `powerbi/`.
 
-## Data Source
+| Preview | Purpose |
+|---|---|
+| ![Executive Operations Overview](docs/dashboard_mockups/executive_overview.png) | Executive Operations Overview: service demand, backlog, resolution, and SLA proxy. |
+| ![Agency Performance and Backlog Risk](docs/dashboard_mockups/agency_performance.png) | Agency Performance & Backlog Risk: volume, backlog exposure, and workflow review candidates. |
+| ![Borough Complaint Demand Intelligence](docs/dashboard_mockups/borough_complaint_analysis.png) | Borough / Complaint Demand Intelligence: geographic and complaint mix analysis. |
+| ![AI Risk and Anomaly Monitor](docs/dashboard_mockups/ai_risk_anomaly_monitor.png) | AI Risk & Anomaly Monitor: explainable spike detection and action queue. |
 
-- Dataset: **311 Service Requests from 2020 to Present**
-- Dataset ID: `erm2-nwe9`
-- Publisher: **NYC Open Data**
-- Source page: https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2020-to-Present/erm2-nwe9
+## Why This Project Fits A Data Analytics & AI Senior Consultant Role
 
-The ingestion script downloads a recent sample by default and preserves source metadata in `data/raw/source_metadata.json` when run locally.
+| JD Requirement | Project Evidence |
+|---|---|
+| Microsoft Fabric, OneLake, Lakehouse, Warehouse architecture | `docs/fabric_reference_architecture.md`, `docs/fabric_deployment_guide.md`, architecture blueprint PNG |
+| Data Factory / orchestration and scalable ETL/ELT | `Makefile`, `src/ingest_311.py`, SQL medallion folders, Fabric pipeline mapping |
+| Power BI semantic modeling and dashboard development | `powerbi/README.md`, `powerbi/dax_measures.md`, dashboard mockups |
+| AI-driven automation, anomaly detection, predictive analytics mindset | `src/anomaly_detection.py`, `outputs/sample_dashboard_data/anomalies.csv`, AI Risk mockup |
+| Data accuracy, consistency, reliability | `src/quality_checks.py`, `docs/data_quality.md`, `outputs/insights/data_quality_report.md` |
+| Governance, compliance, security, responsible AI | `docs/data_governance_responsible_ai.md` |
+| Client advisory and stakeholder communication | `outputs/insights/executive_summary.md`, `docs/consulting_case_study.md`, `docs/senior_consultant_role_alignment.md` |
+| Implementation roadmap and project delivery | `docs/client_implementation_roadmap.md`, `docs/client_enablement_training_plan.md` |
+| Training, adoption, and knowledge transfer | `docs/client_enablement_training_plan.md`, `docs/interview_talk_track.md` |
+
+## Key Insights
+
+- **Backlog triage is the primary management opportunity.** The current sample shows a 28.0% open-request rate.
+- **Demand is concentrated.** Illegal Parking is the highest-volume complaint category with 16,538 requests.
+- **Brooklyn carries the largest demand load.** Brooklyn has 31,128 requests in the current sample.
+- **Anomaly monitoring adds early-warning value.** The sample flagged Water System, Sewer, Traffic Signal Condition, and related spikes across boroughs on 2026-06-11 and 2026-06-12.
+- **Quality controls protect KPI trust.** Most validation rules pass, but 17 invalid date-order rows should be reviewed before certifying resolution-time metrics.
 
 ## Quick Start
 
@@ -132,64 +96,24 @@ python src/generate_insights.py
 python src/generate_dashboard_mockups.py
 ```
 
-Use a larger sample by changing `LIMIT`, for example:
+## Data Source
 
-```bash
-make all LIMIT=300000
-```
+- Dataset: **311 Service Requests from 2020 to Present**
+- Dataset ID: `erm2-nwe9`
+- Publisher: **NYC Open Data**
+- Source page: https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2020-to-Present/erm2-nwe9
 
-## Core Outputs
+## Repository Guide
 
-Power BI-ready CSVs are written to `outputs/sample_dashboard_data/`. The committed repo includes small sample KPI outputs and anomaly outputs. Large generated extracts such as `fact_service_requests.csv` and `dim_location.csv` are ignored by git and can be regenerated locally.
+- `src/`: ingestion, transformation orchestration, quality checks, anomaly detection, insight generation, dashboard mockup generation.
+- `sql/`: bronze, silver, and gold SQL transformations.
+- `powerbi/`: semantic model design, relationship guidance, DAX measures, validation checklist.
+- `docs/`: Fabric blueprint, governance, client roadmap, enablement plan, interview talk track, scorecard.
+- `outputs/`: committed sample KPI/anomaly outputs and consulting summaries.
 
-Insight outputs are written to `outputs/insights/`:
+## Important Truthfulness Notes
 
-- `executive_summary.md`
-- `anomaly_summary.md`
-- `data_quality_report.md`
-- `data_quality_report.csv`
-
-Dashboard mockups are written to `docs/dashboard_mockups/`.
-
-## Power BI And Fabric Readiness
-
-- `powerbi/README.md` explains table imports, model relationships, semantic-model notes, and QA checks.
-- `powerbi/dax_measures.md` documents measures for total requests, backlog rate, resolution hours, SLA proxies, anomaly counts, and backlog flags.
-- `docs/fabric_deployment_guide.md` maps the local project to Microsoft Fabric components.
-
-Important: this repository is **Fabric-ready** and **Power BI-ready**, but it does not claim that the project has been deployed in Fabric or built as a native `.pbix` report.
-
-## Consulting Deliverables
-
-- [Executive summary](outputs/insights/executive_summary.md)
-- [Consulting case study](docs/consulting_case_study.md)
-- [Client implementation roadmap](docs/client_implementation_roadmap.md)
-- [Interview talk track](docs/interview_talk_track.md)
-- [Project review scorecard](docs/project_review_scorecard.md)
-- [Dashboard design](docs/dashboard_design.md)
-- [Data quality framework](docs/data_quality.md)
-
-## Skills Demonstrated
-
-- Public API ingestion with Python
-- Local ELT with DuckDB and SQL
-- Medallion architecture design
-- Star schema modeling for Power BI
-- KPI design for service operations
-- Data-quality validation and exception reporting
-- Explainable anomaly detection
-- Static dashboard preview generation
-- Microsoft Fabric implementation mapping
-- Consulting-style executive communication
-
-## Role Fit
-
-For a **Consultant, Data Analytics & AI** role, this project demonstrates the full consulting loop:
-
-1. Frame the client problem.
-2. Build a reliable data pipeline.
-3. Model business-ready metrics.
-4. Validate data quality.
-5. Design executive dashboards.
-6. Add explainable AI monitoring.
-7. Translate findings into a 30-day client action plan.
+- This is a **local prototype that maps to Fabric components**.
+- The repo contains a **Power BI-ready semantic model design**, not a `.pbix` file.
+- The anomaly detector is **explainable statistical monitoring / AI-assisted analytics**, not a black-box LLM or Azure ML deployment.
+- A real client implementation would require Fabric workspace configuration, security setup, refresh scheduling, stakeholder UAT, and Power BI report development.
