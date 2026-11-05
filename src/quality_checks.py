@@ -59,9 +59,11 @@ def run_quality_checks() -> pd.DataFrame:
     rows = []
     with duckdb.connect(str(DB_PATH), read_only=True) as connection:
         total_records = connection.execute("SELECT COUNT(*) FROM silver_service_requests").fetchone()[0]
+        if total_records == 0:
+            raise ValueError("The silver layer is empty; data quality cannot be reported as passing.")
         for check in CHECKS:
             failed = connection.execute(check["sql"]).fetchone()[0]
-            pass_rate = 1 - (failed / total_records if total_records else 0)
+            pass_rate = 1 - failed / total_records
             rows.append(
                 {
                     "rule": check["rule"],
